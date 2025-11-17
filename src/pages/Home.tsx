@@ -24,7 +24,7 @@ export default function Home({ onNavigate }: HomeProps) {
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
             織脈傳承,共創文化新生
           </h1>
-          <p className="text-xl md:text-2xl mb-10 text-white/90 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl mb-10 text-white/90 leading-relaxed max-w-3xl mx-auto whitespace-nowrap">
             我們是文化與市場之間的橋樑,讓每一個故事都能被看見、被理解、被喜愛
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
