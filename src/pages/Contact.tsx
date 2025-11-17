@@ -33,20 +33,20 @@ export default function Contact() {
     setStatus('submitting');
     setErrorMessage('');
 
+    const payload = new FormData();
+    payload.append('name', formData.name);
+    payload.append('email', formData.email);
+    payload.append('phone', formData.phone);
+    payload.append('type', formData.type);
+    payload.append('message', formData.message);
+
     try {
       const response = await fetch(formspreeEndpoint, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          type: formData.type,
-          message: formData.message,
-        }),
+        body: payload,
       });
 
       if (!response.ok) {

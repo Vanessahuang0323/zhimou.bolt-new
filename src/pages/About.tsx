@@ -52,7 +52,7 @@ export default function About() {
       role: '設計溝通總監',
       expertise: '視覺設計 × 品牌識別',
       image: '/images/tianlei.jpg',
-      imageWrapperClass: 'scale-90',
+      imageWrapperClass: 'scale-90 -translate-y-52',
       imageClass: 'object-top',
     },
     {
@@ -60,7 +60,7 @@ export default function About() {
       role: '技術總監',
       expertise: '網站建置 × 數位整合',
       image: '/images/huangyuting.jpg',
-      imageWrapperClass: 'scale-95',
+      imageWrapperClass: 'scale-95 translate-y-20',
       imageClass: 'object-top',
     },
     {
@@ -202,7 +202,7 @@ export default function About() {
                 key={index}
                 className="group bg-[#F5F3EF] rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
               >
-            <div className="aspect-square overflow-hidden">
+            <div className="aspect-square overflow-hidden rounded-2xl">
               <div
                 className={`w-full h-full transition-transform duration-500 group-hover:scale-110 ${member.imageWrapperClass ?? ''}`}
               >
