@@ -52,12 +52,16 @@ export default function About() {
       role: '設計溝通總監',
       expertise: '視覺設計 × 品牌識別',
       image: '/images/tianlei.jpg',
+      imageWrapperClass: 'scale-90',
+      imageClass: 'object-top',
     },
     {
       name: '黃毓庭',
       role: '技術總監',
       expertise: '網站建置 × 數位整合',
       image: '/images/huangyuting.jpg',
+      imageWrapperClass: 'scale-95',
+      imageClass: 'object-top',
     },
     {
       name: '秦愷辰',
@@ -198,12 +202,16 @@ export default function About() {
                 key={index}
                 className="group bg-[#F5F3EF] rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
               >
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+            <div className="aspect-square overflow-hidden">
+              <div
+                className={`w-full h-full transition-transform duration-500 group-hover:scale-110 ${member.imageWrapperClass ?? ''}`}
+              >
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className={`w-full h-full object-cover ${member.imageClass ?? ''}`}
+                />
+              </div>
                 </div>
                 <div className="p-6">
                   <h3 className="text-2xl font-bold text-[#3A3A3A] mb-2">{member.name}</h3>

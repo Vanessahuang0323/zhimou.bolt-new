@@ -13,19 +13,20 @@ export default function Contact() {
   const [formData, setFormData] = useState(initialFormData);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-
-  const encode = (data: Record<string, string>) =>
-    Object.keys(data)
-      .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-      .join('&');
+  const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/mjkjqrkd';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.currentTarget;
-    const formName = target.getAttribute('name') ?? 'contact';
     const botField = (target.querySelector('input[name="bot-field"]') as HTMLInputElement | null)?.value;
 
     if (botField) {
+      return;
+    }
+
+    if (!formspreeEndpoint) {
+      setStatus('error');
+      setErrorMessage('尚未設定 Formspree endpoint, 請先於 .env 填入 VITE_FORMSPREE_ENDPOINT。');
       return;
     }
 
@@ -33,19 +34,30 @@ export default function Contact() {
     setErrorMessage('');
 
     try {
-      await fetch('/', {
+      const response = await fetch(formspreeEndpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({
-          'form-name': formName,
-          ...formData,
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          type: formData.type,
+          message: formData.message,
         }),
       });
+
+      if (!response.ok) {
+        throw new Error('Formspree submission failed');
+      }
+
       setStatus('success');
       setFormData(initialFormData);
     } catch (error) {
       setStatus('error');
-      setErrorMessage('訊息送出失敗,請稍後再試。');
+      setErrorMessage('訊息送出失敗,請稍後再試或直接來信 yutingh88@gmail.com。');
     }
   };
 
@@ -178,15 +190,7 @@ export default function Contact() {
                   </p>
                 </div>
               ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  name="contact"
-                  method="POST"
-                  data-netlify="true"
-                  data-netlify-honeypot="bot-field"
-                  className="space-y-6"
-                >
-                  <input type="hidden" name="form-name" value="contact" />
+                <form onSubmit={handleSubmit} name="contact" className="space-y-6">
                   <div className="hidden" aria-hidden="true">
                     <label>
                       請勿填寫此欄位
